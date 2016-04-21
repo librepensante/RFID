@@ -9,7 +9,7 @@ void setup() {
     Serial.begin(9600); // Comunicación serial 
     SPI.begin();            // comunicación SPI
     mfrc522.PCD_Init(); // inicia MFRC522
-    Serial.println("Escaniando: UID y tipo...");
+    Serial.println(""UID 4 bytes..."");
 }
 
 void loop() {
