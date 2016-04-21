@@ -39,6 +39,7 @@ else if(comparar(ActualUID,Usuario2))
    Serial.println("Acceso MEDIADOR...");   
 else
    Serial.println("Acceso denegado..."); 
+mfrc522.PICC_HaltA(); // se detiene la lectura   
  }       
 //Función para comparar dos vectores
  boolean comparar(byte uid[],byte tarjeta[])
