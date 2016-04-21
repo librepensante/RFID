@@ -1,43 +1,44 @@
-#include <SPI.h>
-#include <MFRC522.h>
+#include <SPI.h> // Serial Perispherical Interface  
+#include <MFRC522.h> // lector/escritor RC522
 
 #define SS_PIN 10
 #define RST_PIN 9
-MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance.
+MFRC522 mfrc522(SS_PIN, RST_PIN);   // MFRC522 instancia.
 
+byte ActualUID[4]; // 4 bytes con los datos del UID
+byte Usuario1[4]= {228, 35, 209, 181} ; //datos del UID de la tarjeta 
+byte Usuario2[4]= {186, 90, 135, 180} ;//datos del UID de una segunda tarjeta 
 
-byte ActualUID[4];
-byte Usuario1[4]= {228, 35, 209, 181} ;
-byte Usuario2[4]= {186, 90, 135, 180} ;
 
 void setup() {
-    Serial.begin(9600); // Initialize serial communications with the PC
-    SPI.begin();            // Init SPI bus
-    mfrc522.PCD_Init(); // Init MFRC522 card
-    Serial.println("Scan PICC to see UID and type...");
+    Serial.begin(9600); // Comunicación serial 
+    SPI.begin();            // comunicación SPI
+    mfrc522.PCD_Init(); // inicia MFRC522
+    Serial.println("Acceso por UID...");
 }
 
 void loop() {
-    // Look for new cards
+// busca nuevas tarjetas
     if ( ! mfrc522.PICC_IsNewCardPresent()) {
         return;
     }
-    // Select one of the cards
+
+    // Selecciona una 
     if ( ! mfrc522.PICC_ReadCardSerial()) {
         return;
     }
+    //Accede a los bytes del UID
      for (byte i = 0; i < mfrc522.uid.size; i++) {
-      ActualUID[i]=mfrc522.uid.uidByte[i];          
+      ActualUID[i]=mfrc522.uid.uidByte[i];           
                   } 
-      
-      delay(1000);
       Serial.println(" ");
+// Compara UID de la tarjeta con los números de la tarjeta usuario y toma una decisión.
 if(comparar(ActualUID,Usuario1))
    Serial.println("Acceso MASTER...");
 else if(comparar(ActualUID,Usuario2))
    Serial.println("Acceso MEDIADOR...");   
 else
-   Serial.println("Acceso denegado...");       
+   Serial.println("Acceso denegado..."); 
  }       
 //Función para comparar dos vectores
  boolean comparar(byte uid[],byte tarjeta[])
