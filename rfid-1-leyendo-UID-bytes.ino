@@ -1,31 +1,31 @@
-#include <SPI.h>
-#include <MFRC522.h>
+#include <SPI.h> // Serial Perispherical Interface  
+#include <MFRC522.h> // lector/escritor RC522
 
 #define SS_PIN 10
 #define RST_PIN 9
-MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance.
+MFRC522 mfrc522(SS_PIN, RST_PIN);   // MFRC522 instancia.
 
 void setup() {
-    Serial.begin(9600); // Initialize serial communications with the PC
-    SPI.begin();            // Init SPI bus
-    mfrc522.PCD_Init(); // Init MFRC522 card
-    Serial.println("Scan PICC to see UID and type...");
+    Serial.begin(9600); // Comunicación serial 
+    SPI.begin();            // comunicación SPI
+    mfrc522.PCD_Init(); // inicia MFRC522
+    Serial.println("Escaniando: UID y tipo...");
 }
 
 void loop() {
-    // Look for new cards
+    // busca nuevas tarjetas
     if ( ! mfrc522.PICC_IsNewCardPresent()) {
         return;
     }
 
-    // Select one of the cards
+    // Selecciona una 
     if ( ! mfrc522.PICC_ReadCardSerial()) {
         return;
     }
     
    for(int i=0;i<4;i++){
-Serial.println(mfrc522.uid.uidByte[i]);
+Serial.println(mfrc522.uid.uidByte[i]); //muestra información de los primeros 4 bytes (registros) del UID
       }
-      delay(1000);
+mfrc522.PICC_HaltA(); // se detiene la lectura
       }
     
