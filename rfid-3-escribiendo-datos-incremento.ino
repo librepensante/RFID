@@ -38,18 +38,6 @@ void loop() {
         return;
     }
 
-       /* 
-
-       //variables iniciales escritura 
-        byte buffer[]={255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,};
-        byte block;
-        
-        byte len;
-
-        //interface de datos
-        Serial.setTimeout(20000L) ;     // espera 20 seg
-        // Pregunta por data
-      */
 byte  sector = 1; // numero de sector     
 byte  blockA = 5; // numero de bloqueA
 byte  blockB = 6; // numero de bloqueB
